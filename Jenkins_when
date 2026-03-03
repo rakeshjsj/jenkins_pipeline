@@ -32,7 +32,7 @@
                        when{
                          branch 'main'
                         }
-                    } 
+                    
             
                     steps { 
 
@@ -40,7 +40,7 @@
                 
                     }
                 }
-    }
+    
         stage('PARALLEL TEST'){
             
             parallel{
@@ -86,5 +86,7 @@
             }
         }
     }
-}
+ }
+
+
  
