@@ -9,7 +9,7 @@ pipeline{
               
                  
             steps {
-                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                 catchError(buildResult: 'FAILURE', stageResult: 'SUCCESS') {
                         sh '''
                                 sleep 10
                                 exit 1
@@ -43,12 +43,11 @@ pipeline{
                     }
                 }
             }
-        }
+         }
         stage('FINAL') {
 
              agent { label 'slave1' }  
-              
-                
+                 
             steps {
                  
                    echo "FINISHED"
