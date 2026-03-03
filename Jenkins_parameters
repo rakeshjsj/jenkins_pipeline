@@ -1,7 +1,7 @@
 pipeline {
     agent none
 
-    Parameters{
+    parameters{
         string(name: 'Name', defaultValue : 'Project Nameme', description: 'Enter project name')
         booleanParam(name: 'Deploy', defaultValue: true, description: 'Do you want to deploy?')
         choice(name: 'Environment', choices: ['dev', 'qa', 'prod'], description: 'Select environment')
