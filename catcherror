@@ -35,7 +35,7 @@ pipeline{
                 stage('STAGE 2 TESTING') {
             
                     agent { label 'slave2' } 
-            \
+            
                     steps { 
             
                         echo "TESTING STAGE 2"
