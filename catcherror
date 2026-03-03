@@ -6,17 +6,16 @@ pipeline{
         stage('STAGE1') {
 
              agent { label 'slave1' }  
-            
-                environment{
-                  Stage1Env = "stage1 environment variable"    
-                }
+              
+                 
             steps {
-               echo "TO READ environament variables in GROOVY"
-               echo "STAGE1 ENV: ${env.Stage1Env}"
-            
-               sh '''
-                    env
-                '''              
+                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh '''
+                                sleep 10
+                                exit 1
+                         '''
+                          
+                    }
             }
         }
         stage('PARALLEL TEST'){
@@ -43,6 +42,17 @@ pipeline{
                     
                     }
                 }
+            }
+        }
+        stage('FINAL') {
+
+             agent { label 'slave1' }  
+              
+                
+            steps {
+                 
+                   echo "FINISHED"
+                          
             }
         }
     }
