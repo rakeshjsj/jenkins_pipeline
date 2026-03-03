@@ -1,0 +1,40 @@
+pipeline {
+    agent none
+
+    Parameters{
+        string(name: 'Name', defaultValue : 'Project Nameme', description: 'Enter project name')
+        booleanParam(name: 'Deploy', defaultValue: true, description: 'Do you want to deploy?')
+        choice(name: 'Environment', choices: ['dev', 'qa', 'prod'], description: 'Select environment')
+    }
+
+    stages {
+        stage('STAGE1') {
+
+             agent { label 'slave1' }   
+            steps {
+               echo "TO READ THE PARAMETERS in GROOVY"
+               echo "NAME: ${params.Name}"
+               echo "DEPLOY: ${params.Deploy}"
+               echo "ENVIRONMENT: ${params.Environment}"
+              
+            }
+        }
+        stage('Build') {
+
+            
+             agent { label 'slave2' } 
+
+            steps { 
+
+              
+                 sh '''
+                    echo "TO READ THE PARAMETERS IN LINUX"
+                    echo "$Name"
+                    echo "$Deploy"
+                    echo "$Environment"
+                '''
+            }
+        }
+    }
+}
+ 
