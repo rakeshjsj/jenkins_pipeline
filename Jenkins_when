@@ -9,21 +9,38 @@
     }
 
     stages {
-        stage('STAGE1') {
+        stage('CHECKOUT') {
 
              agent { label 'slave1' }  
               
                  
-            steps {
-                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh '''
-                                sleep 10
-                                exit 1
-                         '''
-                          
-                    }
-            }
+                steps {
+                      checkout ([ $class: 'GitSCM',
+                            branches: [[name: '*/main']], 
+                            extensions: [], 
+                            userRemoteConfigs: [[
+                                 
+                                url: 'https://github.com/rakeshjsj/jenkins_pipeline.git'
+                            ]]
+                        ])      
+                }
         }
+         stage('WHEN CONDITION') {
+            
+                    agent { label 'slave2' }
+
+                       when{
+                         branch 'main'
+                        }
+                    } 
+            
+                    steps { 
+
+                        echo "TESTING STAGE 1"
+                
+                    }
+                }
+    }
         stage('PARALLEL TEST'){
             
             parallel{
@@ -41,7 +58,7 @@
                 stage('STAGE 2 TESTING') {
 
                      agent { label 'slave2' } 
-                     
+
                     when{
                         expression{
                             params.Environment == 'dev'
