@@ -1,0 +1,49 @@
+pipelin{
+    
+    agent none
+    
+    environment{
+        Name = "jenkins"
+        Purpose = "to learn jenkins pipeline"
+    }
+
+    stages {
+        stage('STAGE1') {
+
+             agent { label 'slave1' }  
+
+                environment{
+                    Stage1Env = "stage1 environment variable"
+                    
+                }
+
+            steps {
+               echo "TO READ environament variables in GROOVY"
+               echo "NAME: ${env.Name}"
+               echo "PURPOSE: ${env.Purpose}"
+               echo "STAGE1 ENV: ${env.Stage1Env}"
+
+               sh '''
+                    env
+                '''
+              
+            }
+        }
+        stage('Build') {
+
+            
+             agent { label 'slave2' } 
+
+            steps { 
+
+              echo "TO READ environament variables in GROOVY"
+               echo "NAME: ${env.Name}"
+               echo "PURPOSE: ${env.Purpose}"
+               sh '''
+                    env
+                '''
+            }
+        }
+    }
+}
+ 
