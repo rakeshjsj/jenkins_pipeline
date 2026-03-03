@@ -29,9 +29,9 @@ pipeline {
               
                  sh '''
                     echo "TO READ THE PARAMETERS IN LINUX"
-                    echo "NAMe :$(Name)"
-                    echo "DEPLOY :$(Deploy)"
-                    echo "ENVIRONMENT :$(Environment)"
+                    echo "NAME :${Name}"
+                    echo "DEPLOY :${Deploy}"
+                    echo "ENVIRONMENT :${Environment}"
                 '''
             }
         }
