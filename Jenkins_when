@@ -1,0 +1,73 @@
+ pipeline{
+    
+    agent none
+
+    
+    parameters{
+        
+        choice(name: 'Environment', choices: ['dev', 'qa', 'prod'], description: 'Select environment')
+    }
+
+    stages {
+        stage('STAGE1') {
+
+             agent { label 'slave1' }  
+              
+                 
+            steps {
+                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh '''
+                                sleep 10
+                                exit 1
+                         '''
+                          
+                    }
+            }
+        }
+        stage('PARALLEL TEST'){
+            
+            parallel{
+            
+                stage('STAGE 1 TESTING') {
+            
+                    agent { label 'slave2' } 
+            
+                    steps { 
+
+                        echo "TESTING STAGE 1"
+                
+                    }
+                }
+                stage('STAGE 2 TESTING') {
+
+                     agent { label 'slave2' } 
+                     
+                    when{
+                        expression{
+                            params.Environment == 'dev'
+                        }
+                    }
+            
+                   
+            
+                    steps { 
+            
+                        echo "TESTING STAGE 2"
+                    
+                    }
+                }
+            }
+         }
+        stage('FINAL') {
+
+             agent { label 'slave1' }  
+                 
+            steps {
+                 
+                   echo "FINISHED"
+                          
+            }
+        }
+    }
+}
+ 
