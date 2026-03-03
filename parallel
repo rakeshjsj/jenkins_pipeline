@@ -1,0 +1,48 @@
+pipeline{
+    
+    agent none
+
+    stages {
+        stage('STAGE1') {
+
+             agent { label 'slave1' }  
+
+                environment{
+                  Stage1Env = "stage1 environment variable"    
+                }
+            steps {
+               echo "TO READ environament variables in GROOVY"
+               echo "STAGE1 ENV: ${env.Stage1Env}"
+
+               sh '''
+                    env
+                '''
+              
+            }
+        }
+        stage('PARALLEL TEST'){
+
+            stage('STAGE 1 TESTING') {
+
+                agent { label 'slave2' } 
+
+                steps { 
+
+                    echo "TESTING STAGE 1"
+               
+                }
+            }
+            stage('STAGE 2 TESTING') {
+
+                agent { label 'slave2' } 
+
+                steps { 
+
+                    echo "TESTING STAGE 2"
+                   
+                }
+            }
+        }
+    }
+}
+ 
