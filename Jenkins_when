@@ -2,7 +2,12 @@
     
     agent none
 
-    
+    options { 
+         
+           buildDiscarder(logRotator(numToKeepStr: '10'))
+           disableConcurrentBuilds(abortPrevious: true)
+
+       }
     parameters{
         
         choice(name: 'Environment', choices: ['dev', 'qa', 'prod'], description: 'Select environment')
