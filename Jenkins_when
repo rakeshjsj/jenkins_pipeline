@@ -44,7 +44,7 @@
             
                     steps { 
 
-                        echo "TESTING STAGE 1"
+                        echo "TESTING WHEN BLOCK"
                 
                     }
                 }
