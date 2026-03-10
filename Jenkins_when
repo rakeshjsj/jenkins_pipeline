@@ -39,12 +39,12 @@
                              return env.GIT_BRANCH == 'origin/main'
                           }
                         }
-                    
+                             
             
                     steps { 
 
-                        echo "TESTING STAGE 1"
-                
+                       echo "TESTING STAGE 1"
+              
                     }
                 }
     
